@@ -11,7 +11,8 @@ def do_pack():
     file = "versions/web_static_{}.tgz".format(timestamp)
     print(f"Packing web_static to versions/web_static_{timestamp}.tgz")
 
-    if path.isdir("versions") is False:
-        return None if local("mkdir -p versions").failed else file
+    if not path.isdir("versions"):
+        if local("mkdir -p versions").failed is True:
+            return None
 
     return None if local(f"tar -cvzf {file} web_static").failed else file
