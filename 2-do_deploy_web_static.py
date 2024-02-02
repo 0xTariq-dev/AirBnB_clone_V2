@@ -45,7 +45,7 @@ def do_deploy(archive_path):
         run(f"mv {path}{name}/web_static/* {path}{name}/")
         run(f"rm -rf {path}{name}/web_static")
         run(f"rm -rf /data/web_static/current")
-        run(f"ln -s {path}{file}/ /data/web_static/current")
+        run(f"ln -s {path}{name}/ /data/web_static/current")
         return True
-    except:
+    except Exception as e:
         return False
