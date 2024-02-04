@@ -54,6 +54,7 @@ def do_deploy(archive_path):
         run("mv {}{}/web_static/* {}{}".format(path, name, path, name))
         run("rm -rf {}{}/web_static".format(path, name))
         run("ln -sf {}{} /data/web_static/current".format(path, name))
+        sudo("service nginx restart")
         return True
     except Exception as e:
         return False
