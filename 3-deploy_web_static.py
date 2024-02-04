@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 # Script that generates a .tgz archive from the contents of the web_static
-from fabric.api import local, env, put, run, sudo
+from fabric.api import *
+from fabric.decorators import runs_once
 from datetime import datetime
-from os.path import isfile, isdir
+from os.path import isfile, isdir, getsize
 
 env.hosts = ["100.26.173.229", "35.153.66.163"]
+env.user = "ubuntu"
+env.key_filename = "~/.ssh/school"
 
-
+@runs_once
 def do_pack():
     """Function to pack web_static directory into a .tgz archive """
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -17,7 +20,12 @@ def do_pack():
         if local("mkdir -p versions").failed:
             return None
 
-    return None if local(f"tar -cvzf {file} web_static/*").failed else file
+    if local(f"tar -cvzf {file} web_static/*").succeeded:
+        file_size = getsize(file)
+        print(f"web_static packed: {file} -> {file_size} bytes")
+        return file
+    else:
+        return None
 
 
 def do_deploy(archive_path):
@@ -28,7 +36,6 @@ def do_deploy(archive_path):
     Returns:
         False if the file at the path archive_path doesn't exist.
     """
-    # do_pack()
     if not isfile(archive_path):
         return False
 
@@ -43,7 +50,18 @@ def do_deploy(archive_path):
         run("tar -xzf /tmp/{} -C {}{}".format(file, path, name))
         run("rm -f /tmp/{}".format(file))
         run("rm -rf /data/web_static/current")
+        run("mv {}{}/web_static/* {}{}".format(path, name, path, name))
+        run("rm -rf {}{}/web_static".format(path, name))
         run("ln -sf {}{} /data/web_static/current".format(path, name))
         return True
     except Exception as e:
         return False
+
+
+def deploy():
+    """Function to deploy the web_static archive to the servers."""
+    archive = do_pack()
+    if archive is None:
+        return False
+
+    return do_deploy(archive)
