@@ -9,6 +9,7 @@ env.hosts = ["100.26.173.229", "35.153.66.163"]
 env.user = "ubuntu"
 env.key_filename = "~/.ssh/school"
 
+
 @runs_once
 def do_pack():
     """Function to pack web_static directory into a .tgz archive """
