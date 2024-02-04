@@ -53,7 +53,8 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/current")
         run("mv {}{}/web_static/* {}{}".format(path, name, path, name))
         run("rm -rf {}{}/web_static".format(path, name))
-        run("cp {}{}/103-index.html {}{}/my_index.html".format(path, name, path, name))
+        run("cp {}{}/103-index.html {}{}/my_index.html"
+            .format(path, name, path, name))
         run("ln -sf {}{} /data/web_static/current".format(path, name))
         sudo("service nginx restart")
         return True
