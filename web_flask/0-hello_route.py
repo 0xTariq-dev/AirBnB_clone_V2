@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', strict_slashes=False, methods=['GET'])
 def hello_hbnb():
+    """Return a string at the root URL."""
     return 'Hello HBNB!'
 
 
