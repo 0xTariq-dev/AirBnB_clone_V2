@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """A simple Flask app with a single route."""
 
 from flask import Flask
