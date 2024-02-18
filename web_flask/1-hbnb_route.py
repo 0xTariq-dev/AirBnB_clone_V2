@@ -12,6 +12,7 @@ def hello_hbnb():
     """Return a string at the root URL."""
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb', strict_slashes=False, methods=['GET'])
 def hbnb():
     """Return a string at the /hbnb URL."""
