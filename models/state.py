@@ -21,5 +21,6 @@ class State(BaseModel, Base):
         def cities(self):
             """Getter for cities"""
             from models import storage
-            return [ct for ct in storage.all(City).values()
+            cities = [ct for ct in storage.all(City).values()
                     if ct.state_id == self.id]
+            return cities
