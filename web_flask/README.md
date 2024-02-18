@@ -8,3 +8,4 @@
 <center> <h2>File Descriptions</h2> </center>
 -  **[0-hello_route.py](0-hello_route.py)**: A script that starts a Flask web application. The application listens on `port 5000` and responds to the `/` route with the text `Hello HBNB!`.
 -  **[1-hbnb_route.py](1-hbnb_route.py)**: A script that starts a Flask web application. The application listens on `port 5000` and responds to the `/` route with the text `Hello HBNB!`, and the `/hbnb` route with the text `HBNB`.
+-  **[2-c_route.py](2-c_route.py)**: A script that starts a Flask web application. The application listens on `port 5000` and responds to the `/` route with the text `Hello HBNB!`, the `/hbnb` route with the text `HBNB`, and the `/c/<text>` route with the text `C` followed by the value of the `text` variable.
