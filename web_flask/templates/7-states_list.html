@@ -4,5 +4,6 @@
     <UL>
         {% for state in states|sort(attribute='name') %}
             <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
+    </UL>
         {% endfor %}
     {%- endblock %}
