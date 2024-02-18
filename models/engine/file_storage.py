@@ -33,7 +33,6 @@ class FileStorage:
                     dic[key] = self.__objects[key]
             return (dic)
 
-
     def new(self, obj):
         """Adds new object to storage dictionary"""
         key = "{}.{}".format(type(obj).__name__, obj.id)
@@ -53,23 +52,23 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 dictionary = json.load(f)
             for key in dictionary:
-                self.__objects[key] = classes[dictionary[key]["__class__"]](**dictionary[key])
-        except:
+                self.__objects[key] = classes[
+                    dictionary[key]["__class__"]](**dictionary[key])
+        except Exception as e:
             pass
 
-
     def delete(self, obj=None):
-            """
-            Deletes an object from the storage.
+        """
+        Deletes an object from the storage.
 
-            Args:
-                obj: The object to be deleted. If None, no action is taken.
-            """
-            if obj is None:
-                pass
-            else:
-                del self.__objects[
-                    type(obj).__name__ + "." + obj.id]
+        Args:
+            obj: The object to be deleted. If None, no action is taken.
+        """
+        if obj is None:
+            pass
+        else:
+            del self.__objects[
+                type(obj).__name__ + "." + obj.id]
 
     def close(self):
         """calls reload() method for deserializing the JSON file to objects."""
