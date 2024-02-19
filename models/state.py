@@ -14,13 +14,12 @@ class State(BaseModel, Base):
     """ State class definition """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        cities = relationship("City", backref="state", cascade="delete")
-    else:
-        @property
-        def cities(self):
-            """Getter for cities"""
-            from models import storage
-            cities = [ct for ct in storage.all(City).values()
-                      if ct.state_id == self.id]
-            return cities
+    cities = relationship("City", backref="state", cascade="delete")
+
+    @property
+    def cities(self):
+        """Getter for cities"""
+        from models import storage
+        cities = [ct for ct in storage.all(City).values()
+                    if ct.state_id == self.id]
+        return cities

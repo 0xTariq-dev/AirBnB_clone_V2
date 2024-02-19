@@ -25,13 +25,13 @@ class FileStorage:
         if cls is None:
             return self.__objects
         else:
-            dic = self.__objects
-            for key in dic:
+            dic = {}
+            for key, value in self.__objects.items():
                 partition = key.replace('.', ' ')
                 partition = shlex.split(partition)
                 if (partition[0] == cls.__name__):
-                    dic[key] = self.__objects[key]
-            return (dic)
+                    dic[key] = value
+            return dic
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
