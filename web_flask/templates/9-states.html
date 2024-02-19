@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content -%}
+    {% if state is none %}
+        <H1>Not found</H1>
+    {% else %}
+    {% if states is defined %}
+        <H1>States</H1>
+        <UL>
+            {% for state in states|sort(attribute='name') %}
+            <LI>{{ state.id }}: {{ state.name }}</LI>
+            {% endfor %}
+        </UL>
+    {% else %}
+        <H1>State: {{ state.name }}</H1>
+        <H3>Cities:</H3>
+        <UL>
+            <UL>
+                {% for city in state.cities|sort(attribute='name') -%}
+                {% if city.state_id == state.id %}
+                <LI>{{ city.id }}: {{ city.name }}</LI>
+                {%- endif %}
+                {% endfor %}
+            </UL>
+        </UL>
+    {% endif %}
+    {% endif %}
+{%- endblock %}
