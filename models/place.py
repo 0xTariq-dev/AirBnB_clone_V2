@@ -3,17 +3,19 @@
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, INTEGER, String, ForeignKey, Table, Float
-from sqlalchemy.orm import declarative_base, relationship  
-from os import getenv 
+from sqlalchemy.orm import declarative_base, relationship
+from os import getenv
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
-                Column('place_id', String(60), ForeignKey('places.id'),
-                    primary_key=True, nullable=False),
-                Column('amenity_id', String(60),
-                    ForeignKey('amenities.id'),
-                    primary_key=True, nullable=False)
-                )
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True,
+                                 nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True, nullable=False)
+                          )
 
 
 class Place(BaseModel, Base):
@@ -46,7 +48,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review', cascade='all, delete',
-                            backref='place')
+                               backref='place')
 
         amenities = relationship("Amenity", secondary=place_amenity,
                                  viewonly=False,

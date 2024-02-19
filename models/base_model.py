@@ -18,8 +18,10 @@ class BaseModel:
     """A base class for all hbnb models"""
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         id = Column(String(60), primary_key=True, nullable=False)
-        created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
-        updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+        created_at = Column(DateTime, default=datetime.utcnow(),
+                            nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow(),
+                            nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
@@ -31,7 +33,7 @@ class BaseModel:
                 if k == 'created_at' or k == 'updated_at':
                     setattr(self, k, datetime.strptime(v,
                                                        '%Y-%m-%dT%H:%M:%S.%f'))
-                elif k != '__class__'and k != "_sa_instance_state":
+                elif k != '__class__' and k != "_sa_instance_state":
                     setattr(self, k, v)
             if 'id' not in kwargs:
                 self.id = str(uuid.uuid4())
@@ -46,9 +48,10 @@ class BaseModel:
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         dict_repr = self.__dict__.copy()  # create a copy of the dictionary
         if '_sa_instance_state' in dict_repr:
-            dict_repr.pop('_sa_instance_state')  # remove _sa_instance_state from the dictionary
+            dict_repr.pop('_sa_instance_state')
         dict_repr_str = str(dict_repr)  # convert the dictionary to a string
-        dict_repr_str = dict_repr_str.replace('["', '[', 1).replace('"]', ']', 1)  # remove the double quotation between the first two square brackets
+        dict_repr_str = dict_repr_str.replace('["',
+                                              '[', 1).replace('"]', ']', 1)
         return '[{}] ({}) {}'.format(cls, self.id, dict_repr_str)
 
     def save(self):
@@ -61,7 +64,7 @@ class BaseModel:
     def to_dict(self):
         """Convert instance into dict format"""
         dict = {}
-        dict.update(self.__dict__) 
+        dict.update(self.__dict__)
         dict.update(
             {'__class__': (
                 str(type(self)).split('.')[-1]

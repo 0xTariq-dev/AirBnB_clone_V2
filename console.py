@@ -123,16 +123,17 @@ class HBNBCommand(cmd.Cmd):
             for attr in args[1:]:
                 attr_split = attr.split('=')
                 attr_split[1] = eval(attr_split[1])
-                attr_split[1] = attr_split[1].replace("_", " ").replace(
-                    '"', '\\"') if isinstance(attr_split[1], str) else attr_split[1]
+                attr_split[1] = attr_split[1].replace("_", " ") \
+                    .replace('"', '\\"') \
+                    if isinstance(attr_split[1], str) else attr_split[1]
                 new_attrs[attr_split[0]] = attr_split[1]
         except SyntaxError:
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
         new_instance = HBNBCommand.classes[args[0]](**new_attrs)
-        #if "_sa_instance_state" in new_instance.__dict__:
-            #new_instance.__dict__.pop('_sa_instance_state') 
+        """if "_sa_instance_state" in new_instance.__dict__:
+            new_instance.__dict__.pop('_sa_instance_state')"""
         new_instance.save()
         print(new_instance.id)
 
@@ -277,7 +278,7 @@ class HBNBCommand(cmd.Cmd):
         # first determine if new_attrs or args
         if '{' in args[2] and '}' in args[2] and type(eval(args[2])) is dict:
             new_attrs = eval(args[2])
-            args = []  # reformat new_attrs into list, ex: [<name>, <value>, ...]
+            args = []  # reformat new_attrs into list, ex: [<name>, <value>, .]
             for k, v in new_attrs.items():
                 args.append(k)
                 args.append(v)
@@ -330,6 +331,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
